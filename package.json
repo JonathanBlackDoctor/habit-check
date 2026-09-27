@@ -1,0 +1,38 @@
+{
+  "name": "habit-check",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "emulators": "firebase emulators:start --project demo-habit-check --only auth,firestore",
+    "test:emulators": "firebase emulators:exec --project demo-habit-check --only auth,firestore \"node node_modules/vitest/vitest.mjs run --config vitest.integration.config.ts\"",
+    "test:browser": "node tests/browser.cjs",
+    "test:browser:integration": "node tests/browser-integration.cjs",
+    "format": "prettier --write src tests *.ts *.json"
+  },
+  "dependencies": {
+    "firebase": "^12.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.5.0",
+    "firebase-tools": "^14.0.0",
+    "playwright": "1.62.1",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.0",
+    "vite": "^6.4.0",
+    "vite-plugin-pwa": "^1.0.0",
+    "vitest": "^3.2.0"
+  }
+}

@@ -1,0 +1,43 @@
+name: Deploy Habit Check
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: pnpm install --frozen-lockfile
+      - name: Load existing public Firebase browser configuration
+        # This is the public browser configuration already shipped by Habit Garden,
+        # never an Admin SDK credential. Pin the source for reproducible builds.
+        run: |
+          curl --fail --silent --show-error --location 'https://raw.githubusercontent.com/JonathanBlackDoctor/habit-garden/d56d8328b2f771dd1a5739aac392879ac6dd10c4/apps/web/.env' -o "$RUNNER_TEMP/garden-web.env"
+          grep -E '^VITE_FIREBASE_(API_KEY|AUTH_DOMAIN|PROJECT_ID|APP_ID)=' "$RUNNER_TEMP/garden-web.env" > .env.local
+          test "$(wc -l < .env.local)" -eq 4
+      - run: pnpm test
+      - run: pnpm build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
