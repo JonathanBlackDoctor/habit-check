@@ -73,4 +73,7 @@ pnpm dev --port 5175
 
 ## 전달 상태
 
-로컬 구현 및 에뮬레이터 검증 완료. 원격 push, 공개, GitHub Pages 배포는 수행하지 않았습니다. 실제 Google 계정의 운영 로그인과 실제 휴대폰 설치·사용 확인은 남아 있습니다. 자세한 결과는 `QA.md`를 참고하세요.
+GitHub Pages 배포 완료: https://jonathanblackdoctor.github.io/habit-check/ . main 변경 시 Actions가 검사·빌드·배포합니다. Firebase 브라우저 설정은 원본 앱의 공개 설정을 고정 커밋에서 가져오며 환경 파일은 Git에 넣지 않습니다. 실제 Google 계정 로그인과 휴대폰 설치 확인은 남아 있습니다. 자세한 결과는 `QA.md`를 참고하세요.
+
+알림 바로가기: `?view=habits`, `?view=review`, `?view=prayers`. 로그인 후 해당 화면으로 진입하며 날짜는 앱의 한국 시간 04:00 경계를 따릅니다.
+
